@@ -1,0 +1,10 @@
+{
+	"id": "enhanced-code-blocks",
+	"name": "Enhanced Code Blocks",
+	"version": "1.0.0",
+	"minAppVersion": "1.4.4",
+	"description": "Enhanced Markdown code blocks: VitePress-style line highlighting, focus, diff, error/warning markers, line numbers, filename titles, code groups, and more.",
+	"author": "",
+	"authorUrl": "",
+	"isDesktopOnly": false
+}

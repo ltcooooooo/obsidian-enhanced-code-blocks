@@ -1,0 +1,417 @@
+/*!
+ * VitePress-style code block styles for Obsidian
+ *
+ * The plugin puts BOTH .vp-markdown-body AND .language-{lang} on the SAME
+ * element (the <div> that Obsidian passes to the code-block processor).
+ * Therefore every selector must target that element directly, not as a
+ * descendant of .vp-markdown-body.
+ */
+
+/* Token colours come from Shiki's inline `style` attributes (single-theme
+   output, re-highlighted on theme change), so no token-colour CSS is needed. */
+
+/* ------------------------------------------------------------------ */
+/*  Code block container (.vp-markdown-body.language-xxx)             */
+/* ------------------------------------------------------------------ */
+
+.vp-markdown-body[class*='language-'] {
+	position: relative;
+	margin: 16px 0;
+	background-color: var(--code-background, var(--background-primary-alt, #f6f8fa));
+	color: var(--code-normal, var(--text-normal, #24292e));
+	border-radius: 8px;
+	font-size: var(--code-size, 0.85em);
+	line-height: var(--code-line-height, 1.7);
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	tab-size: 4;
+	hyphens: none;
+}
+
+.vp-markdown-body[class*='language-'] pre {
+	position: relative;
+	z-index: 1;
+	margin: 0;
+	padding: 20px 24px;
+	background: transparent !important;
+	overflow-x: auto;
+}
+
+.vp-markdown-body[class*='language-'] code {
+	display: block;
+	padding: 0;
+	background: transparent !important;
+	font-family: var(--font-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace);
+	font-size: inherit;
+	line-height: inherit;
+	white-space: pre;
+}
+
+/* Override Shiki inline colours so they inherit from CSS vars when needed */
+.vp-markdown-body[class*='language-'] code span[style] {
+	background-color: transparent !important;
+}
+
+.vp-markdown-body[class*='language-'] code .line {
+	display: inline-block;
+	width: 100%;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Language label                                                     */
+/* ------------------------------------------------------------------ */
+
+.vp-markdown-body[class*='language-'] > .lang {
+	position: absolute;
+	top: 8px;
+	right: 12px;
+	z-index: 2;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--code-comment, var(--text-muted, #6a737d));
+	pointer-events: none;
+	user-select: none;
+	opacity: 1;
+	transition: opacity 0.25s;
+}
+
+/* On hover (or copy-button focus) the copy button fades in, so fade the
+   language label out — VitePress behaviour — to avoid the two overlapping. */
+.vp-markdown-body[class*='language-']:hover > .copy + .lang,
+.vp-markdown-body[class*='language-'] > .copy:focus + .lang {
+	opacity: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Copy button                                                        */
+/* ------------------------------------------------------------------ */
+
+.vp-markdown-body[class*='language-'] > .copy {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	z-index: 3;
+	width: 40px;
+	height: 40px;
+	border: 1px solid var(--background-modifier-border, #d1d5da);
+	box-shadow: none;
+	border-radius: 4px;
+	background-color: var(--background-primary, #fff);
+	/* Neutral grey (like VitePress) so the icon is visible on light AND dark —
+	   `currentColor` does not resolve inside a background-image data-URI. */
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(128,128,128,1)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Crect width='8' height='4' x='8' y='2' rx='1' ry='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3C/g%3E%3C/svg%3E");
+	background-position: center;
+	background-size: 20px;
+	background-repeat: no-repeat;
+	opacity: 0;
+	cursor: pointer;
+	transition: opacity 0.25s, background-color 0.25s, border-color 0.25s;
+}
+
+.vp-markdown-body[class*='language-']:hover > .copy,
+.vp-markdown-body[class*='language-'] > .copy:focus {
+	opacity: 1;
+}
+
+.vp-markdown-body[class*='language-'] > .copy:hover {
+	background-color: var(--background-secondary, #f3f4f6);
+}
+
+.vp-markdown-body[class*='language-'] > .copy.copied {
+	border-color: var(--color-green, #28a745);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%2328a745' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------------ */
+/*  Filename title bar  ( ```js [config.js] on a standalone block )    */
+/* ------------------------------------------------------------------ */
+
+.vp-markdown-body[class*='language-'] > .vp-code-title {
+	display: flex;
+	align-items: center;
+	height: 40px;
+	box-sizing: border-box;
+	padding: 0 24px;
+	font-size: 13px;
+	font-weight: 500;
+	/* Match the active code-group tab (--text-normal) so a standalone block's
+	   filename is not noticeably fainter than a code-group's filename. */
+	color: var(--text-normal, #24292e);
+	border-bottom: 1px solid var(--background-modifier-border, #d1d5da);
+}
+
+/* Clip the bar's square top corners to the container's rounded corners. */
+.vp-markdown-body[class*='language-'].vp-has-title {
+	overflow: hidden;
+}
+
+/* The title bar replaces the corner language label. */
+.vp-markdown-body[class*='language-'].vp-has-title > .lang {
+	display: none;
+}
+
+/* Push the line-number gutter below the title bar so numbers still align. */
+.vp-markdown-body[class*='language-'].vp-has-title.line-numbers-mode > .line-numbers-wrapper {
+	top: 40px;
+}
+
+/* `.line-numbers-mode` adds `padding-left: 32px` to the container to make room
+   for the gutter, which would also shift/narrow the title bar. Cancel that on
+   the title bar so it spans the full width and its text aligns with the title
+   of non-line-numbered blocks. */
+.vp-markdown-body[class*='language-'].vp-has-title.line-numbers-mode > .vp-code-title {
+	margin-left: -32px;
+	width: calc(100% + 32px);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Line highlighting  ( {1,3-5} )                                     */
+/* ------------------------------------------------------------------ */
+
+/* Line highlighting – {1,3-5} */
+/* VitePress: --vp-code-line-highlight-color = var(--vp-c-default-soft) */
+.vp-markdown-body[class*='language-'] code .highlighted {
+	background-color: rgba(142, 150, 170, 0.14);
+	margin: 0 -24px;
+	padding: 0 24px;
+	width: calc(100% + 48px);
+	display: inline-block;
+}
+
+/* VitePress: --vp-code-line-error-color = var(--vp-c-danger-soft) */
+.vp-markdown-body[class*='language-'] code .highlighted.error {
+	background-color: rgba(244, 63, 94, 0.14);
+}
+
+/* VitePress: --vp-code-line-warning-color = var(--vp-c-warning-soft) */
+.vp-markdown-body[class*='language-'] code .highlighted.warning {
+	background-color: rgba(234, 179, 8, 0.14);
+}
+
+/* Dark theme overrides */
+.theme-dark .vp-markdown-body[class*='language-'] code .highlighted {
+	background-color: rgba(101, 117, 133, 0.16);
+}
+.theme-dark .vp-markdown-body[class*='language-'] code .highlighted.error {
+	background-color: rgba(244, 63, 94, 0.16);
+}
+.theme-dark .vp-markdown-body[class*='language-'] code .highlighted.warning {
+	background-color: rgba(234, 179, 8, 0.16);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Diff notation  ( // [!code ++] / // [!code --] )                  */
+/* ------------------------------------------------------------------ */
+
+.vp-markdown-body[class*='language-'] code .diff {
+	margin: 0 -24px;
+	padding: 0 24px;
+	width: calc(100% + 48px);
+	display: inline-block;
+	position: relative;
+}
+
+.vp-markdown-body[class*='language-'] code .diff::before {
+	position: absolute;
+	left: 10px;
+}
+
+/* Diff notation – // [!code ++] / // [!code --] */
+/* VitePress: --vp-code-line-diff-remove-color = var(--vp-c-danger-soft) */
+/* VitePress: --vp-code-line-diff-remove-symbol-color = var(--vp-c-danger-1) */
+.vp-markdown-body[class*='language-'] code .diff.remove {
+	background-color: rgba(244, 63, 94, 0.12);
+	opacity: 0.7;
+}
+.vp-markdown-body[class*='language-'] code .diff.remove::before {
+	content: '-';
+	color: #b8272c; /* --vp-c-red-1 light */
+}
+
+/* VitePress: --vp-code-line-diff-add-color = var(--vp-c-success-soft) */
+/* VitePress: --vp-code-line-diff-add-symbol-color = var(--vp-c-success-1) */
+.vp-markdown-body[class*='language-'] code .diff.add {
+	background-color: rgba(16, 185, 129, 0.12);
+}
+.vp-markdown-body[class*='language-'] code .diff.add::before {
+	content: '+';
+	color: #18794e; /* --vp-c-green-1 light */
+}
+
+/* Dark theme overrides */
+.theme-dark .vp-markdown-body[class*='language-'] code .diff.remove {
+	background-color: rgba(244, 63, 94, 0.16);
+}
+.theme-dark .vp-markdown-body[class*='language-'] code .diff.remove::before {
+	color: #f66f81; /* --vp-c-red-1 dark */
+}
+.theme-dark .vp-markdown-body[class*='language-'] code .diff.add {
+	background-color: rgba(16, 185, 129, 0.16);
+}
+.theme-dark .vp-markdown-body[class*='language-'] code .diff.add::before {
+	color: #3dd68c; /* --vp-c-green-1 dark */
+}
+
+/* ------------------------------------------------------------------ */
+/*  Focus notation  ( // [!code focus] )                               */
+/* ------------------------------------------------------------------ */
+
+.vp-markdown-body[class*='language-'] .has-focused-lines .line:not(.has-focus) {
+	filter: blur(0.095rem);
+	opacity: 0.4;
+	transition: filter 0.35s, opacity 0.35s;
+}
+
+.vp-markdown-body[class*='language-']:hover .has-focused-lines .line:not(.has-focus) {
+	filter: blur(0);
+	opacity: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Line numbers  ( :line-numbers )                                    */
+/* ------------------------------------------------------------------ */
+
+.vp-markdown-body[class*='language-'].line-numbers-mode {
+	padding-left: 32px;
+}
+
+.vp-markdown-body .line-numbers-wrapper {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 3;
+	border-right: 1px solid var(--background-modifier-border, #d1d5da);
+	padding-top: 20px;
+	width: 32px;
+	text-align: center;
+	/* Inherit the container's resolved code metrics so the numbers line up
+	   with the code lines exactly (re-declaring 0.85em here would compound on
+	   top of the container's 0.85em and slowly drift out of alignment). */
+	font-family: var(--font-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace);
+	font-size: inherit;
+	line-height: inherit;
+	color: var(--code-comment, var(--text-muted, #6a737d));
+	user-select: none;
+	pointer-events: none;
+}
+
+/* VitePress emits `<span class="line-number">N</span><br>` — the <br> creates
+   the line break, so the span MUST stay inline. Forcing display:block here adds
+   an extra blank line per entry and drifts the numbers out of alignment. */
+.vp-markdown-body .line-numbers-wrapper .line-number {
+	display: inline;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Code group  ( ::: code-group )                                     */
+/* ------------------------------------------------------------------ */
+
+.vp-code-group {
+	margin-top: 16px;
+}
+
+.vp-code-group .tabs {
+	position: relative;
+	display: flex;
+	margin: 0;
+	padding: 0 12px;
+	background-color: var(--code-background, var(--background-primary-alt, #f6f8fa));
+	border-radius: 8px 8px 0 0;
+	overflow-x: auto;
+	overflow-y: hidden;
+	box-shadow: inset 0 -1px var(--background-modifier-border, #d1d5da);
+}
+
+.vp-code-group .tabs .vp-tab {
+	position: relative;
+	display: inline-block;
+	border: none;
+	border-bottom: 1px solid transparent;
+	border-radius: 0;
+	margin: 0;
+	padding: 0 12px;
+	line-height: 48px;
+	height: 48px;
+	font-size: 14px;
+	font-weight: 500;
+	font-family: inherit;
+	color: var(--text-muted, #6a737d);
+	background: transparent;
+	box-shadow: none;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: color 0.25s;
+}
+
+.vp-code-group .tabs .vp-tab::after {
+	position: absolute;
+	right: 8px;
+	bottom: -1px;
+	left: 8px;
+	z-index: 1;
+	height: 2px;
+	border-radius: 2px;
+	content: '';
+	background-color: transparent;
+	transition: background-color 0.25s;
+}
+
+.vp-code-group .tabs .vp-tab:hover {
+	color: var(--text-normal, #24292e);
+}
+
+.vp-code-group .tabs .vp-tab.active {
+	color: var(--text-normal, #24292e);
+}
+
+.vp-code-group .tabs .vp-tab.active::after {
+	background-color: var(--interactive-accent, #3391e6);
+}
+
+.vp-code-group .blocks .vp-block {
+	display: none;
+	margin-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.vp-code-group .blocks .vp-block.active {
+	display: block;
+}
+
+.vp-code-group .blocks .vp-block > [class*='language-'] {
+	margin-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+/* Hide paragraphs containing only closing `:::` markers in reading view. */
+.vp-hidden {
+	display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Live-preview (CodeMirror) widget wrapper                           */
+/* ------------------------------------------------------------------ */
+
+/* CodeMirror measures block widgets via offsetHeight, which excludes the
+   element's own margin. The wrapper converts the VitePress block margin into
+   padding (which IS measured) so widget heights are correct and later content
+   stays aligned. */
+.vp-cm-wrap {
+	padding: 8px 0;
+}
+
+.vp-cm-wrap > .vp-markdown-body,
+.vp-cm-wrap > .vp-code-group {
+	margin: 0;
+}
+
+/* Hint that clicking enters edit mode. */
+.vp-cm-wrap {
+	cursor: text;
+}
