@@ -5,22 +5,21 @@
   <a href="./README.en.md"><b>English</b></a>
 </p>
 
-[![Release](https://img.shields.io/github/v/release/yourname/obsidian-enhanced-code-blocks)](https://github.com/yourname/obsidian-enhanced-code-blocks/releases)
+[![Release](https://img.shields.io/github/v/release/ltcooooooo/obsidian-enhanced-code-blocks)](https://github.com/ltcooooooo/obsidian-enhanced-code-blocks/releases)
 
 Bring VitePress-style Markdown code-block syntax to Obsidian — line highlighting, focus, diff, error / warning markers, line numbers, filename titles, and code groups. Every one of these VitePress-flavoured extensions works natively inside your notes.
 
 ## Features
 
-| Feature | Syntax | Effect |
-|---------|--------|--------|
-| **Line highlighting** | `` ``js{4}`` `` or `` ``js{1,3-5}`` `` | Highlight specified lines |
-| **Focus** | `// [!code focus]` or `// [!code focus:2]` | Focus specific lines, blur the rest |
-| **Diff markers** | `// [!code ++]` / `// [!code --]` | Added / removed line styles |
-| **Error / Warning** | `// [!code error]` / `// [!code warning]` | Error- or warning-coloured line markers |
-| **Line numbers** | `` ``ts:line-numbers`` `` or `` ``ts:line-numbers=5`` `` | Show line numbers, optional start value |
-| **Code groups** | `::: code-group` + multiple fences | Tabbed multi-language display |
-
-
+| Feature | Effect |
+|---------|--------|
+| **Line highlighting** | Highlight specified lines |
+| **Focus** | Focus specific lines, blur the rest |
+| **Diff markers** | Added / removed line styles |
+| **Error / Warning** | Error- or warning-coloured line markers |
+| **Line numbers** | Show line numbers, optional start value |
+| **Filename title** | Display filename title above code blocks |
+| **Code groups** | Tabbed multi-language display |
 ## Installation
 
 1. In Obsidian, open **Settings → Community plugins → Community plugin marketplace**
@@ -28,7 +27,7 @@ Bring VitePress-style Markdown code-block syntax to Obsidian — line highlighti
 3. Click Install, then enable the plugin
 
 Or install manually:
-1. Download the latest `main.js` and `manifest.json` from [Releases](https://github.com/yourname/obsidian-enhanced-code-blocks/releases)
+1. Download the latest `main.js` and `manifest.json` from [Releases](https://github.com/ltcooooooo/obsidian-enhanced-code-blocks/releases)
 2. Drop them into `<vault>/.obsidian/plugins/enhanced-code-blocks/`
 3. Restart Obsidian and enable the plugin
 
@@ -142,6 +141,7 @@ export default { /* TS config */ }
 <img src="docs/images/code-group.jpg" alt="code-group" width="500">
 
 
+
 ## Settings
 
-- **Default show line numbers**: when on, every code block shows line numbers by default, unless `:no-line-numbers` is explicitly added.
+- **默认显示行号**: when on, every code block shows line numbers by default, unless `:no-line-numbers` is explicitly added.

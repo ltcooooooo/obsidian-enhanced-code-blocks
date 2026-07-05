@@ -5,20 +5,21 @@
   <a href="./README.en.md">English</a>
 </p>
 
-[![Release](https://img.shields.io/github/v/release/yourname/obsidian-enhanced-code-blocks)](https://github.com/yourname/obsidian-enhanced-code-blocks/releases)
+[![Release](https://img.shields.io/github/v/release/ltcooooooo/obsidian-enhanced-code-blocks)](https://github.com/ltcooooooo/obsidian-enhanced-code-blocks/releases)
 
 为 Obsidian 带来增强的 Markdown 代码块语法——高亮、聚焦、差异、错误/警告标记、行号、文件名标题、代码组，所有这些 VitePress 风格的语法扩展都能在你的笔记里使用。
 
 ## 功能特性
 
-| 功能 | 语法 | 效果 |
-|------|------|------|
-| **行高亮** | \`\`\`js{4}\`\`\` 或 \`\`\`js{1,3-5}\`\`\` | 高亮指定行 |
-| **聚焦** | // [!code focus] 或 // [!code focus:2] | 聚焦特定行，模糊其他 |
-| **差异标记** | // [!code ++] / // [!code --] | 新增/删除行样式 |
-| **错误/警告** | // [!code error] / // [!code warning] | 错误色/警告色行标记 |
-| **行号** | \`\`\`ts:line-numbers\`\`\` 或 \`\`\`ts:line-numbers=5\`\`\` | 显示行号，可指定起始 |
-| **代码组** | ::: code-group + 多个围栏 | 标签页式多语言展示 |
+| 功能  | 效果 |
+|------|------|
+| **行高亮** | 高亮指定行 |
+| **聚焦** | 聚焦特定行，模糊其他 |
+| **差异标记** | 新增/删除行样式 |
+| **错误/警告** | 错误色/警告色行标记 |
+| **行号** | 显示行号，可指定起始 |
+| **文件名标题** | 显示文件名标题 |
+| **代码组** | 标签页式多语言展示 |
 
 
 ## 安装
@@ -28,7 +29,7 @@
 3. 点击安装后启用
 
 或手动安装：
-1. 从 [Releases](https://github.com/yourname/obsidian-enhanced-code-blocks/releases) 下载最新 `main.js` 和 `manifest.json`
+1. 从 [Releases](https://github.com/ltcooooooo/obsidian-enhanced-code-blocks/releases) 下载最新 `main.js` 和 `manifest.json`
 2. 将文件放入 `<vault>/.obsidian/plugins/enhanced-code-blocks/`
 3. 重启 Obsidian，启用插件
 
